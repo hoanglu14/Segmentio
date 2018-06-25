@@ -284,15 +284,17 @@ class SegmentioCell: UICollectionViewCell {
 
     
     fileprivate func setupContent(content: SegmentioItem) {
+        let defaultState = options.states.defaultState
+        
         if style.isWithImage() {
             segmentImageView?.contentMode = options.imageContentMode
             segmentImageView?.image = content.image
+            segmentImageView?.tintColor = defaultState.imageTintColor
         }
         
         if style.isWithText() {
             segmentTitleLabel?.textAlignment = options.labelTextAlignment
             segmentTitleLabel?.numberOfLines = options.labelTextNumberOfLines
-            let defaultState = options.states.defaultState
             segmentTitleLabel?.textColor = defaultState.titleTextColor
             segmentTitleLabel?.font = defaultState.titleFont
             segmentTitleLabel?.text = content.title
