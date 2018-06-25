@@ -157,6 +157,10 @@ class SegmentioCell: UICollectionViewCell {
             segmentTitleLabel?.minimumScaleFactor = 0.5
             segmentTitleLabel?.adjustsFontSizeToFitWidth = true
         }
+        
+        if style.isWithImage() {
+            segmentImageView?.tintColor = selected ? selectedState.imageTintColor : defaultState.imageTintColor
+        }
                 
         if (style != .onlyLabel) {
             segmentImageView?.image = selected ? selectedImage : image
