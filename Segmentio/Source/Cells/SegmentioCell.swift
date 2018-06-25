@@ -41,17 +41,27 @@ class SegmentioCell: UICollectionViewCell {
                 let defaultState = options.states.defaultState
                 let selectedState = options.states.selectedState
                 
-                if style.isWithText() {
-                    let textColor = cellSelected ? selectedState.titleTextColor : defaultState.titleTextColor
-                    let font = cellSelected ? selectedState.titleFont : defaultState.titleFont
+                var textColor = defaultState.titleTextColor
+                var font = defaultState.titleFont
+                var imageTintColor = defaultState.imageTintColor
+                if isHighlighted {
+                    textColor = highlightedState.titleTextColor
+                    font = highlightedState.titleFont
+                    imageTintColor = highlightedState.imageTintColor
                     
+                } else if cellSelected {
+                    textColor = selectedState.titleTextColor
+                    font = selectedState.titleFont
+                    imageTintColor = selectedState.imageTintColor
+                }
+                
+                if style.isWithText() {
                     segmentTitleLabel?.textColor = textColor
                     segmentTitleLabel?.font = font
                 }
                 
                 if style.isWithImage() {
-                    let tintColor = cellSelected ? selectedState.imageTintColor : defaultState.imageTintColor
-                    segmentImageView?.tintColor = tintColor
+                    segmentImageView?.tintColor = imageTintColor
                 }
                 
                 backgroundColor = isHighlighted ? highlightedState.backgroundColor : .clear
@@ -284,17 +294,15 @@ class SegmentioCell: UICollectionViewCell {
 
     
     fileprivate func setupContent(content: SegmentioItem) {
-        let defaultState = options.states.defaultState
-        
         if style.isWithImage() {
             segmentImageView?.contentMode = options.imageContentMode
             segmentImageView?.image = content.image
-            segmentImageView?.tintColor = defaultState.imageTintColor
         }
         
         if style.isWithText() {
             segmentTitleLabel?.textAlignment = options.labelTextAlignment
             segmentTitleLabel?.numberOfLines = options.labelTextNumberOfLines
+            let defaultState = options.states.defaultState
             segmentTitleLabel?.textColor = defaultState.titleTextColor
             segmentTitleLabel?.font = defaultState.titleFont
             segmentTitleLabel?.text = content.title
